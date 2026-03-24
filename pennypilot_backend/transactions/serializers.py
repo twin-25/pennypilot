@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Category, Transaction
+from .models import Category, Transaction
 
 
 

@@ -3,7 +3,6 @@ from django.conf import settings
 
 from colorfield.fields import ColorField
 
-from django.contrib.auth.models import AbstractUser
 
 
 
