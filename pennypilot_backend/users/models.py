@@ -1,9 +1,12 @@
 from django.db import models
+from django.conf import settings
 
-from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+from colorfield.fields import ColorField
+
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+
 
 class User(AbstractUser):
   email = models.EmailField(max_length=254, unique=True)
@@ -13,4 +16,9 @@ class User(AbstractUser):
 
   USERNAME_FIELD = 'email'
   REQUIRED_FIELDS = ['username']
+
+
+
+
+
 

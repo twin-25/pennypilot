@@ -43,9 +43,15 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework_simplejwt',
     "corsheaders",
+    'colorfield',
 
 
     'users.apps.UsersConfig',
+    'budgets.apps.BudgetsConfig',
+    'transactions.apps.TransactionsConfig',
+    'notifications.apps.NotificationsConfig',
+    'ai.apps.AiConfig',
+
 ]
 
 MIDDLEWARE = [
