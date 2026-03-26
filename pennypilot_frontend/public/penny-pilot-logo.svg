@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <radialGradient id="coinGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a2744"/>
+      <stop offset="100%" stop-color="#060D1A"/>
+    </radialGradient>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1f35"/>
+      <stop offset="100%" stop-color="#060D1A"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="500" height="500" rx="120" fill="url(#bgGlow)"/>
+
+  <!-- Ambient glow -->
+  <circle cx="250" cy="250" r="200" fill="rgba(99,102,241,0.06)"/>
+  <circle cx="250" cy="250" r="140" fill="rgba(245,181,40,0.05)"/>
+
+  <!-- Outer dashed orbit ring -->
+  <circle cx="250" cy="250" r="185" fill="none" stroke="#3A6CB5" stroke-width="2"
+    stroke-dasharray="10 10" opacity="0.4"/>
+
+  <!-- Orbit dot -->
+  <circle cx="250" cy="65" r="10" fill="#6366F1"/>
+  <circle cx="250" cy="65" r="18" fill="#6366F1" opacity="0.2"/>
+
+  <!-- Coin body -->
+  <circle cx="250" cy="250" r="155" fill="url(#coinGlow)"/>
+  <circle cx="250" cy="250" r="155" fill="none" stroke="#F5B528" stroke-width="8"/>
+  <!-- Inner ring -->
+  <circle cx="250" cy="250" r="138" fill="none" stroke="#F5B528" stroke-width="2" opacity="0.25"/>
+
+  <!-- Plane mark -->
+  <!-- Main wing body -->
+  <path d="M130 250 L260 195 L290 250 L260 305 Z" fill="#F5B528"/>
+  <!-- Shadow lower wing -->
+  <path d="M225 250 L260 305 L290 250 Z" fill="#060D1A" opacity="0.3"/>
+  <!-- Nose -->
+  <path d="M260 195 L318 248 L260 305 L275 250 Z" fill="#FFD766"/>
+  <!-- Tail fin up -->
+  <path d="M130 250 L148 222 L175 250 Z" fill="#FFD766" opacity="0.9"/>
+  <!-- Tail fin down -->
+  <path d="M130 250 L148 278 L175 250 Z" fill="#F5B528" opacity="0.5"/>
+  <!-- Engine stripe -->
+  <rect x="200" y="238" width="50" height="10" rx="5" fill="#FFD766" opacity="0.35"/>
+
+  <!-- AI spark lines -->
+  <line x1="108" y1="224" x2="128" y2="238" stroke="#6366F1" stroke-width="4" opacity="0.85" stroke-linecap="round"/>
+  <line x1="100" y1="250" x2="124" y2="250" stroke="#6366F1" stroke-width="4" opacity="0.65" stroke-linecap="round"/>
+  <line x1="108" y1="276" x2="128" y2="262" stroke="#6366F1" stroke-width="4" opacity="0.85" stroke-linecap="round"/>
+
+  <!-- Neural node dots on coin edge -->
+  <circle cx="250" cy="98" r="7" fill="#6366F1" opacity="0.9"/>
+  <circle cx="400" cy="195" r="6" fill="#6366F1" opacity="0.7"/>
+  <circle cx="355" cy="390" r="6" fill="#6366F1" opacity="0.7"/>
+  <circle cx="105" cy="310" r="5" fill="#6366F1" opacity="0.6"/>
+</svg>

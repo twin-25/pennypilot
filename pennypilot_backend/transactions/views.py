@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes 
 from rest_framework.permissions import IsAuthenticated
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -79,7 +80,26 @@ def deleteTransaction(request, id):
   return Response(status = status.HTTP_204_NO_CONTENT)
 
 
-  
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getDashboard(request):
+  total_income = Transaction.objects.filter(user = request.user, type = 'INC').aggregate(Sum('amount'))['amount__sum'] or 0
+  total_expense = Transaction.objects.filter(user = request.user, type = 'EXP').aggregate(Sum('amount'))['amount__sum'] or 0
+  balance = total_income - total_expense
+  recent_transactions = Transaction.objects.filter(user = request.user).order_by('-date')[:5]
+  category_transactions = Transaction.objects.filter(user = request.user, type='EXP').values('category__name', 'category__icon', 'category__color').annotate(
+    total = Sum('amount')
+  )
+  serializer = TransactionSerializer(recent_transactions, many=True)
+
+  return Response({
+    'income':total_income,
+    'expense':total_expense,
+    'balance':balance,
+    'recent_transactions': serializer.data,
+    'by_category': list(category_transactions)
+  })
+
 
 
 

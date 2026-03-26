@@ -10,6 +10,16 @@
   --color-success: #1d9e75;
   --color-danger: #e24b4a;
   --color-border: #2a2a3e;
+  --color-brand-gold: #F5B528;
+}
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 body {
