@@ -27,7 +27,7 @@ class Category(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL,  on_delete=models.CASCADE,null=True,blank=True)
   name = models.CharField(blank = False, null=True, max_length= 100)
   icon = models.CharField(max_length=10)
-  color = ColorField(default = "#F7F2F2", format="hexa")
+  color = ColorField(default = "#F7F2F2")
   def __str__(self):
         return self.name
 
@@ -47,3 +47,5 @@ class Transaction(models.Model):
 
   def __str__(self):
         return f"{self.user} - {self.type} - {self.amount}"
+  
+

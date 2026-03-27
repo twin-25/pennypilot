@@ -6,7 +6,9 @@ import Navbar from '../components/Navbar.jsx'
 import SpendingPieChart from '../components/SpendingPieChart.jsx'
 
 const DashboardPage = () => {
-  const  {data, isLoading, error} = useGetDashboardQuery()
+  const  {data, isLoading, error} = useGetDashboardQuery(undefined, {
+  refetchOnMountOrArgChange: true  
+})
   
   return (
     <>

@@ -1,12 +1,12 @@
 
-from . models import Transaction
-from .serializers import TransactionSerializer
+from . models import Transaction,Category
+from .serializers import TransactionSerializer,CategorySerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes 
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Sum
-
+from django.db.models import Q
 # Create your views here.
 
 @api_view(["GET"])
@@ -100,6 +100,25 @@ def getDashboard(request):
     'by_category': list(category_transactions)
   })
 
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getCategories(request):
+  user = request.user
+  categories = Category.objects.filter(Q(user=request.user) | Q(user=None))  
+  serializer = CategorySerializer(categories, many = True)
+  return Response(serializer.data, status = status.HTTP_200_OK)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def createCategory(request):
+  serializer = CategorySerializer(data = request.data, context={'request': request})
+
+  if serializer.is_valid():
+    serializer.save()
+    return Response(serializer.data, status = status.HTTP_201_CREATED)
+  
+  return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST )
 
 
 

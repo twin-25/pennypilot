@@ -3,6 +3,8 @@ import './App.css'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
+import TransactionsPage from './pages/TransactionsPage'
+import Modal from './components/Modal'
 
 
 const PrivateRoutes = () =>{
@@ -22,8 +24,9 @@ function App() {
 
         <Route element={<PrivateRoutes/>}>
         <Route path='/dashboard' element={<DashboardPage/>}/>
+        <Route path='/transactions' element={<TransactionsPage/>}/>
+        <Route path ='/addTransaction' element={<Modal/>}/>
         </Route>
-
       </Routes>
     </Router>
   )

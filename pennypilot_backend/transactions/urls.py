@@ -6,6 +6,8 @@ urlpatterns = [
   path('', views.getTransactions, name= 'get-transactions' ),
   path('create/', views.createTransaction, name= 'create-transaction' ),
   path('summary/', views.getDashboard, name='dashboard-summary'),
+  path('categories/', views.getCategories, name = 'get categories'),
+  path('categories/create/', views.createCategory, name = 'create-category'),
 
   path('<int:id>/', views.getTransaction, name= 'get-transaction' ),
   path('<int:id>/update/', views.updateTransaction, name= 'update-transaction' ),
