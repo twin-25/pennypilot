@@ -4,30 +4,38 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'base.settings')
 django.setup()
 
-# now import models AFTER setup
+from budgets.models import Budget
 from transactions.models import Category
 from users.models import User
 
-# 2. Create categories — user=None means default for everyone
-categories = [
-    {'name': 'Food',         'icon': '🍔', 'color': '#FF5733'},
-    {'name': 'Rent',         'icon': '🏠', 'color': '#33FF57'},
-    {'name': 'Transport',    'icon': '🚗', 'color': '#3357FF'},
-    {'name': 'Health',       'icon': '💊', 'color': '#FF33F5'},
-    {'name': 'Entertainment','icon': '🎮', 'color': '#F5FF33'},
-    {'name': 'Salary',       'icon': '💰', 'color': '#33FFF5'},
-    {'name': 'Shopping',     'icon': '🛍️', 'color': '#FF9933'},
-    {'name': 'Education',    'icon': '📚', 'color': '#9933FF'},
+# get existing user and categories
+user = User.objects.get(email='test@test.com')
+
+food = Category.objects.get(name='Food', user=None)
+rent = Category.objects.get(name='Rent', user=None)
+transport = Category.objects.get(name='Transport', user=None)
+health = Category.objects.get(name='Health', user=None)
+entertainment = Category.objects.get(name='Entertainment', user=None)
+
+budgets = [
+    {'category': food,          'limit_amount': 100,  'month': 'MAR', 'year': 2026},
+    {'category': rent,          'limit_amount': 1000, 'month': 'MAR', 'year': 2026},
+    {'category': transport,     'limit_amount': 300,  'month': 'MAR', 'year': 2026},
+    {'category': health,        'limit_amount': 200,  'month': 'MAR', 'year': 2026},
+    {'category': entertainment, 'limit_amount': 150,  'month': 'MAR', 'year': 2026},
 ]
 
-for cat in categories:
-    category, created = Category.objects.get_or_create(
-        name=cat['name'],
-        user=None,  # ← default category visible to all users!
-        defaults={
-            'icon': cat['icon'],
-            'color': cat['color']
-        }
+for b in budgets:
+    budget, created = Budget.objects.get_or_create(
+        user=user,
+        category=b['category'],
+        month=b['month'],
+        year=b['year'],
+        defaults={'limit_amount': b['limit_amount']}
     )
     if created:
-        print(f'✅ Category {cat["name"]} created')
+        print(f'✅ Budget {b["category"].name} - ${b["limit_amount"]} created')
+    else:
+        print(f'⚠️ Budget {b["category"].name} already exists')
+
+print('\n🎉 Budget seeding complete!')

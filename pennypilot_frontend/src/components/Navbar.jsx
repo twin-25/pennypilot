@@ -3,10 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../store/slices/authSlice"
 
+import useNotifications from '../hooks/useNotifications'
+import { FiBell } from 'react-icons/fi'
+
 const Navbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.auth.user)
+  const { unreadCount } = useNotifications()
 
   const handleLogout = () => {
     dispatch(logout())
@@ -52,6 +56,18 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
+
+
+        <div className='relative cursor-pointer'>
+        <FiBell className='text-muted' size={20} />
+        {unreadCount > 0 && (
+          <span className='absolute -top-1 -right-1 bg-danger text-white 
+                           text-xs rounded-full w-4 h-4 flex items-center 
+                           justify-center'>
+            {unreadCount}
+          </span>
+        )}
+      </div>
 
         {/* Right — User + Logout */}
         <div className="flex items-center gap-4">

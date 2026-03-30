@@ -16,6 +16,12 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class TransactionSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many = False, read_only = True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    category_id = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+        source='category',
+        write_only=True
+    )
     class Meta:
         model = Transaction
         exclude = ['created_at', 'updated_at']

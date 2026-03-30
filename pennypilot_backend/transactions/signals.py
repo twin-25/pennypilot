@@ -5,6 +5,8 @@ from budgets.models import Budget
 from django.db.models import Sum
 from datetime import datetime
 from notifications.models import Notification
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 
 @receiver(post_save, sender=Transaction)
 def check_budget(sender, instance, created, **kwargs):
@@ -37,12 +39,29 @@ def check_budget(sender, instance, created, **kwargs):
     
     percentage = (total/budget.limit_amount) * 100
 
+    
 
     if percentage >= 80:
+      message = f"⚠️ You've used {percentage:.0f}% of your {category.name} budget!"
+
       Notification.objects.create(
         user = user,
-        message = f"⚠️ You've used {percentage:.0f}% of your {category.name} budget!"
+        message = message
       )
+
+      channel_layer = get_channel_layer()
+      async_to_sync(channel_layer.group_send)(
+        f"notifications_{user.id}",
+        {
+          'type': 'send_notification',
+          'message': message
+        }
+      )
+
+  print(f'Signal fired! percentage: {percentage}')
+  print(f'Budget: {budget.limit_amount}')
+  print(f'Total spent: {total}')
+
     
 
 

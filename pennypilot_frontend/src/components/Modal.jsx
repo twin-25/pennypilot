@@ -11,7 +11,7 @@ const Modal = ({ isOpen, onClose, transaction = null }) => {
   const{data} = useGetCategoriesQuery()
 
 const [transactionData, setTransactionData] = useState({
-  category: transaction?.category?.id || '',
+  category_id: transaction?.category?.id || '',
   amount: transaction?.amount || '',
   type: transaction?.type || 'EXP',
   mode_of_payment: transaction?.mode_of_payment || 'CASH',
@@ -62,8 +62,8 @@ const [transactionData, setTransactionData] = useState({
           <Select
             label='Category'
             id='category'
-            value={transactionData.category}
-            onChange={(e) => setTransactionData({...transactionData, type: e.target.value})}
+            value={transactionData.category_id}
+            onChange={(e) => setTransactionData({...transactionData, category_id: e.target.value})}
             options={data?.map((category)=>(
               {value:`${category.id}`, label:`${category.icon} ${category.name}`}
             )) ||[]}
