@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import TransactionsPage from './pages/TransactionsPage'
 import Modal from './components/Modal'
+import NotificationsPage from './pages/NotificationsPage'
 
 
 const PrivateRoutes = () =>{
@@ -26,7 +27,11 @@ function App() {
         <Route path='/dashboard' element={<DashboardPage/>}/>
         <Route path='/transactions' element={<TransactionsPage/>}/>
         <Route path ='/addTransaction' element={<Modal/>}/>
+        <Route path ='/notifications' element={<NotificationsPage/>}/>
         </Route>
+
+        
+
       </Routes>
     </Router>
   )

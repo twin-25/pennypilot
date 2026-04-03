@@ -18,11 +18,8 @@ health = Category.objects.get(name='Health', user=None)
 entertainment = Category.objects.get(name='Entertainment', user=None)
 
 budgets = [
-    {'category': food,          'limit_amount': 100,  'month': 'MAR', 'year': 2026},
-    {'category': rent,          'limit_amount': 1000, 'month': 'MAR', 'year': 2026},
-    {'category': transport,     'limit_amount': 300,  'month': 'MAR', 'year': 2026},
-    {'category': health,        'limit_amount': 200,  'month': 'MAR', 'year': 2026},
-    {'category': entertainment, 'limit_amount': 150,  'month': 'MAR', 'year': 2026},
+    {'category': food,          'limit_amount': 100,  'month': 'APR', 'year': 2026},
+    
 ]
 
 for b in budgets:

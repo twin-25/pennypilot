@@ -10,58 +10,53 @@ from channels.layers import get_channel_layer
 
 @receiver(post_save, sender=Transaction)
 def check_budget(sender, instance, created, **kwargs):
-  if created:
-    now = datetime.now()
-    month = now.strftime('%b').upper()
-    year = now.year
+    if created:
+        now = datetime.now()
+        month = now.strftime('%b').upper()
+        year = now.year
+        category = instance.category
+        user = instance.user
 
-    category = instance.category
-    user = instance.user
+        if instance.type != 'EXP':
+            return
 
-    if instance.type != 'EXP':
-      return
-    
-    try:
-      budget = Budget.objects.get(user = user, year = year, month = month, category = category)
+        try:
+            budget = Budget.objects.get(
+                user=user, year=year, month=month, category=category)
+        except Budget.DoesNotExist:
+            return
 
-    except Budget.DoesNotExist:
-      return
-    
-    totalTransactions = totalTransactions = Transaction.objects.filter(
-    category=category,
-    user=user,
-    date__month=now.month,  
-    date__year=now.year,    
-    )
-    total = totalTransactions.aggregate(
-    Sum('amount')
-    )['amount__sum'] or 0
-    
-    percentage = (total/budget.limit_amount) * 100
+        total = Transaction.objects.filter(
+            category=category,
+            user=user,
+            date__month=now.month,
+            date__year=now.year,
+            type='EXP'
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
 
-    
+        percentage = (total / budget.limit_amount) * 100
 
-    if percentage >= 80:
-      message = f"⚠️ You've used {percentage:.0f}% of your {category.name} budget!"
+        print(f'Signal fired! percentage: {percentage}')
 
-      Notification.objects.create(
-        user = user,
-        message = message
-      )
+        #  set message for both cases
+        if percentage >= 100:
+            message = f"🚨 You've exceeded your {category.name} budget!"
+        elif percentage >= 80:
+            message = f"⚠️ You've used 80% of your {category.name} budget!"
+        else:
+            return  # under 80% — do nothing
 
-      channel_layer = get_channel_layer()
-      async_to_sync(channel_layer.group_send)(
-        f"notifications_{user.id}",
-        {
-          'type': 'send_notification',
-          'message': message
-        }
-      )
+        #  create notification + send websocket for BOTH cases
+        Notification.objects.get_or_create(
+            user=user,
+            message=message
+        )
 
-  print(f'Signal fired! percentage: {percentage}')
-  print(f'Budget: {budget.limit_amount}')
-  print(f'Total spent: {total}')
-
-    
-
-
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f"notifications_{user.id}",
+            {
+                'type': 'send_notification',
+                'message': message
+            }
+        )
