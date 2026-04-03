@@ -7,12 +7,12 @@ export const transactionsApi = api.injectEndpoints({
       providesTags: ['Transactions'],
     }),
     getTransaction: builder.query({
-      query: (id) =>`/transactions/${id}/`,
+      query: (id) =>`transactions/${id}/`,
       providesTags: ['Transactions', 'Dashboard'],
     }),
     updateTransaction: builder.mutation({
       query:({id, ...transactionData}) =>({
-        url:`/transactions/${id}/update/`,
+        url:`transactions/${id}/update/`,
         method: 'PUT',
         body: transactionData      
       }),

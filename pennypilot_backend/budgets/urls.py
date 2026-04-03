@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-urlPatterns = [
+urlpatterns = [
   path('', views.getBudgets,name = 'get-budgets' ),
   path('create/', views.createBudget, name='create-budget'),
   path('<int:id>/update/', views.updateBudget,name = 'update-budget' ),

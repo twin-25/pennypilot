@@ -6,6 +6,7 @@ const Select = ({
   value = '',
   label = '',
   error = '',
+  disabled = false,
   onChange,
   options = [], // [{ value: 'CASH', label: 'Cash' }]
 }) => {
@@ -18,6 +19,7 @@ const Select = ({
         id={id}
         value={value}
         onChange={onChange}
+        disabled = {disabled}
         className='bg-secondary text-text border border-border 
                    rounded-lg px-3 py-3 text-base
                    focus:outline-none focus:border-primary
