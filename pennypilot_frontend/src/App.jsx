@@ -7,7 +7,7 @@ import TransactionsPage from './pages/TransactionsPage'
 import Modal from './components/Modal'
 import NotificationsPage from './pages/NotificationsPage'
 import BudgetsPage from './pages/BudgetsPage'
-
+import ProfilePage from './pages/ProfilePage'
 
 const PrivateRoutes = () =>{
   const token = localStorage.getItem('token')
@@ -30,6 +30,7 @@ function App() {
         <Route path ='/addTransaction' element={<Modal/>}/>
         <Route path ='/notifications' element={<NotificationsPage/>}/>
         <Route path ='/budgets' element={<BudgetsPage/>}/>
+        <Route path = '/profile' element={<ProfilePage/>}/>
 
         </Route>
 
