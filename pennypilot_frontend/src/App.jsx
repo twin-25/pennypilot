@@ -14,6 +14,17 @@ const PrivateRoutes = () =>{
   return token?<Outlet/>:<Navigate to='/login'/>
 }
 
+// // in your baseQuery setup
+// const token = localStorage.getItem('token')
+// if (token) {
+//   const { exp } = JSON.parse(atob(token.split('.')[1])) // decode JWT payload
+//   if (Date.now() >= exp * 1000) {
+//     store.dispatch(logout())
+//     localStorage.removeItem('token')
+//     // optionally redirect
+//   }
+// }
+
 function App() {
   
 
