@@ -37,12 +37,12 @@ def getAiTips(request):
   
   Be funny, witty and respectful.
 
-  return ONLY a JSON format:
-  {{
-  'tip1': your first tip here,
-  'tip2': your second tip,
-  'tip3': your third tip,
-  }}
+  return ONLY a JSON array:
+  [
+  {{"tip": "your tip here", "icon": "emoji"}},
+  {{"tip": "your tip here", "icon": "emoji"}},
+  {{"tip": "your tip here", "icon": "emoji"}}
+]
   '''
 
 

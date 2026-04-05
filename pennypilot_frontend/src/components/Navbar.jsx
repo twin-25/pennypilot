@@ -30,7 +30,7 @@ useEffect(() => {
 }, [])
 
   return (
-    <nav className="bg-surface fixed w-full z-20 top-0 inset-s-0 border-b border-border">
+    <nav className="bg-surface fixed w-full z-20 top-0 inset-s-0 border-b border-border ">
       <div className="max-w-7xl flex items-center justify-between mx-auto p-4">
         
         {/* Logo */}

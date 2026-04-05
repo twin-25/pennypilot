@@ -8,6 +8,7 @@ import Modal from './components/Modal'
 import NotificationsPage from './pages/NotificationsPage'
 import BudgetsPage from './pages/BudgetsPage'
 import ProfilePage from './pages/ProfilePage'
+import AiPage from './pages/AiPage'
 
 const PrivateRoutes = () =>{
   const token = localStorage.getItem('token')
@@ -42,6 +43,7 @@ function App() {
         <Route path ='/notifications' element={<NotificationsPage/>}/>
         <Route path ='/budgets' element={<BudgetsPage/>}/>
         <Route path = '/profile' element={<ProfilePage/>}/>
+        <Route path = '/ai-tips' element={<AiPage/>}/>
 
         </Route>
 
