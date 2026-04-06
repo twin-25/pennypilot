@@ -27,6 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =config('SECRET_KEY')
 GROQ_API_KEY=config('GROQ_API_KEY')
 
+
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default='')
+STRIPE_PRICE_ID = config('STRIPE_PRICE_ID')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -55,6 +61,7 @@ INSTALLED_APPS = [
     'transactions.apps.TransactionsConfig',
     'notifications.apps.NotificationsConfig',
     'ai.apps.AiConfig',
+    'payments.apps.PaymentsConfig',
 
 ]
 
