@@ -67,6 +67,12 @@ useEffect(() => {
               Profile
             </Link>
           </li>
+
+          <li>
+            <Link to='/upgrade' className="text-muted hover:text-primary transition-colors">
+              Upgrade
+            </Link>
+          </li>
         </ul>
 
 
