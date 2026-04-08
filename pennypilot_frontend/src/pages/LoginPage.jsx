@@ -54,6 +54,17 @@ const LoginPage = () => {
             <p className='text-sm text-danger'>{loginError}</p>
           )}
           <Button type='submit'>Login</Button>
+
+          <p className='text-sm text-center' style={{ color: 'rgba(240,233,214,0.4)' }}>
+            New User?{' '}
+            <span
+              className='cursor-pointer'
+              style={{ color: '#F5B528' }}
+              onClick={() => navigate('/login')}
+            >
+              Register
+            </span>
+          </p>
         </form>
       </div>
       </div>

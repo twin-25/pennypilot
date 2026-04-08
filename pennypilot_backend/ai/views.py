@@ -25,10 +25,23 @@ client = Groq(
 @permission_classes([IsAuthenticated])
 def getAiTips(request):
   user = request.user
+
+  if not user.is_pro:
+     allowed, usage = check_and_log_usage(user, 'tips', limit=3)
+     if not allowed:
+        return Response({
+           'error':'limit_exceeded',
+           'message':'Upgrade to Pro for unlimited AI Tips!!',
+           'usage': usage,
+           'limit': 3
+        }, status=status.HTTP_403_FORBIDDEN)
+     
   transactions = Transaction.objects.filter(user = user , date__gte = datetime.now()- timedelta(days=30))
   budgets = Budget.objects.filter(user=user, month = datetime.now().strftime('%b').upper(),year = datetime.now().year)
   transactions_data = TransactionSerializer(transactions, many=True).data
   budget_data = BudgetSerializer(budgets, many=True).data
+
+
   
   prompt = f'''Act as a financial advisor for the {user.first_name}.
   Analyze  their transactions and provide 3 specific actionable tips
@@ -45,15 +58,6 @@ def getAiTips(request):
   {{"tip": "your tip here", "icon": "emoji"}}
 ]
   '''
-  if not user.is_pro:
-     allowed, usage = check_and_log_usage(user, 'tips', limit=3)
-     if not allowed:
-        return Response({
-           'error':'limit_exceeded',
-           'message':'Upgrade to Pro for unlimited AI Tips!!',
-           'usage': usage,
-           'limit': 3
-        }, status=status.HTTP_403_FORDIDDEN)
 
 
   try:
@@ -98,14 +102,14 @@ def getAiAnalysis(request):
     last_month = now - timedelta(days=30)  
 
     if not user.is_pro:
-     allowed, usage = check_and_log_usage(user, 'tips', limit=3)
+     allowed, usage = check_and_log_usage(user, 'analysis', limit=3)
      if not allowed:
         return Response({
            'error':'limit_exceeded',
            'message':'Upgrade to Pro for unlimited AI Analytics!!',
            'usage': usage,
            'limit': 3
-        }, status=status.HTTP_403_FORDIDDEN)
+        }, status=status.HTTP_403_FORBIDDEN)
 
     # detailed transactions
     current_transactions = list(Transaction.objects.filter(
@@ -208,14 +212,14 @@ def getAiReport(request):
     last_month = now - timedelta(days=30) 
 
     if not user.is_pro:
-     allowed, usage = check_and_log_usage(user, 'tips', limit=1)
+     allowed, usage = check_and_log_usage(user, 'report', limit=1)
      if not allowed:
         return Response({
            'error':'limit_exceeded',
            'message':'Upgrade to Pro for unlimited AI Reports!!',
            'usage': usage,
            'limit': 1
-        }, status=status.HTTP_403_FORDIDDEN)
+        }, status=status.HTTP_403_FORBIDDEN)
 
     current_transactions = list(Transaction.objects.filter(
         user=user,

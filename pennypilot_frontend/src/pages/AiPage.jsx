@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import Button from "../components/ui/Button";
 import Loader from "../components/ui/Loader";
 import Card from "../components/ui/Card";
+import LimitExceeded from "../components/LimitExceeded";
 
 const AiPage = () => {
   const tabs = [
@@ -18,17 +19,18 @@ const AiPage = () => {
   const [active, setActive] = useState("tips");
   const [result, setResult] = useState(null);
 
-  const [getTips, { isLoading: tipsLoading, error: tipsError }] =
+  const [getTips, { isLoading: tipsLoading,  }] =
     useGetTipsMutation();
-  const [getAnalysis, { isLoading: analysisLoading, error: analysiosError }] =
+  const [getAnalysis, { isLoading: analysisLoading,}] =
     useGetAnalysisMutation();
-  const [getReport, { isLoading: reportLoading, error: reportError }] =
+  const [getReport, { isLoading: reportLoading,  }] =
     useGetReportMutation();
 
   const isLoading = tipsLoading || analysisLoading || reportLoading
 
   const handleGenerate = async () => {
     setResult(null);
+    try{
     let res;
     if (active === "tips") {
       res = await getTips().unwrap();
@@ -37,8 +39,20 @@ const AiPage = () => {
     } else {
       res = await getAnalysis().unwrap();
     }
-
     setResult(res);
+
+  }
+    catch (err) {
+      if (err.status === 403){
+        setResult({
+          error:'limit_exceeded',
+          message:err.data.message
+        })
+      }
+      console.log(err)
+    }
+
+    
   };
   return (
     <div className="min-h-screen bg-background pt-20 p-6">
@@ -72,8 +86,15 @@ const AiPage = () => {
       </div>
 
       {isLoading && <Loader text='Consulting the financial oracle... 🔮'/>}
+      {result?.error === 'limit_exceeded' && (<LimitExceeded
+        message={result.message}
+        usage={result.usage}
+        limit={result.limit}
+        feature={active}
+        />
+      )}
 
-      {result && !isLoading &&(
+      {result && !isLoading && !result.error && (
         <div>
           {active === 'tips' && (
   <div className='flex flex-col gap-4'>
@@ -100,7 +121,7 @@ const AiPage = () => {
                   <div className="'flex items-start gap-3">
                     <span className="text-2xl">{item.icon}</span>
                     <div>
-                      <p className="text-primarty font-medium text-sm uppercase">{item.type}-{item.category}</p>
+                      <p className="text-primary font-medium text-sm uppercase">{item.type}-{item.category}</p>
                       <p className="text-text mt-1">{item.message}</p>
                     </div>
                   </div>

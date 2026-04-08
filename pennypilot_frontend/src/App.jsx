@@ -10,6 +10,7 @@ import BudgetsPage from './pages/BudgetsPage'
 import ProfilePage from './pages/ProfilePage'
 import AiPage from './pages/AiPage'
 import UpgradePage from './pages/UpgradePage'
+import LandingPage from './pages/LandingPage'
 
 const PrivateRoutes = () =>{
   const token = localStorage.getItem('token')
@@ -34,6 +35,7 @@ function App() {
     
     <Router>
       <Routes>
+        <Route path='/' element={<LandingPage/>}/>
         <Route path = '/register' element = {<RegisterPage/>}/>
         <Route path = '/login' element = {<LoginPage/>}/>
 

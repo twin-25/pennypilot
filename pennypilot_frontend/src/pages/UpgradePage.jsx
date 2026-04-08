@@ -6,7 +6,7 @@ import Button from '../components/ui/Button'
 import Loader from '../components/ui/Loader'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { TiTick } from "react-icons/ti";
+import { TiTick} from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 
 const UpgradePage = () => {
@@ -35,10 +35,10 @@ const UpgradePage = () => {
       <Navbar/>
       {isLoading && <Loader text='Preparing your upgrade'/>}
       <div className='text-center mb-10'>
-        <h1 className='text-text text-3xl font-bold mb-2'>
+        <h1 className='text-text text-3xl font-bold mb-1'>
           Upgrade to Pro
         </h1>
-        <p>
+        <p className='text-yellow-600 text-2xl mb-5'>
           unlock the power of pennypilot
         </p>
         {user?.is_pro &&(
@@ -53,12 +53,12 @@ const UpgradePage = () => {
           <Card title='Free'>
             <p className='text-muted text-sm mb-4'>Current plan</p>
             <ul className='flex flex-col gap-2 mb-6'>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> Basic dashboard</li>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> 3 AI tips/month</li>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> 5 budgets max</li>
-              <li className='text-muted text-sm flex items-center gap-2'><ImCross /> Advanced analytics</li>
-              <li className='text-muted text-sm flex items-center gap-2'><ImCross /> Monthly reports</li>
-              <li className='text-muted text-sm flex items-center gap-2'><ImCross /> Unlimited AI</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> Basic dashboard</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> 3 AI tips/month</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> 5 budgets max</li>
+              <li className='text-muted text-sm flex items-center gap-2'><ImCross className='text-danger' /> Advanced analytics</li>
+              <li className='text-muted text-sm flex items-center gap-2'><ImCross className='text-danger' /> Monthly reports</li>
+              <li className='text-muted text-sm flex items-center gap-2'><ImCross className='text-danger' /> Unlimited AI</li>
             </ul>
             <p className='text-text text-2xl font-bold mb-4'>$0<span className='text-muted text-sm'>/month</span></p>
             <Button disabled className='w-full'>
@@ -70,12 +70,12 @@ const UpgradePage = () => {
           <Card title='Pro ⭐' className='border-primary'>
             <p className='text-primary text-sm mb-4'>Recommended</p>
             <ul className='flex flex-col gap-2 mb-6'>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> Everything in Free</li>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> Unlimited AI tips</li>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> Unlimited budgets</li>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> Advanced analytics</li>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> Monthly AI reports</li>
-              <li className='text-text text-sm flex items-center gap-2'><TiTick /> 7 day free trial!</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> Everything in Free</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> Unlimited AI tips</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> Unlimited budgets</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> Advanced analytics</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> Monthly AI reports</li>
+              <li className='text-text text-sm flex items-center gap-2'><TiTick className='text-green-500' /> 7 day free trial!</li>
             </ul>
             <p className='text-text text-2xl font-bold mb-4'>
               $9.99<span className='text-muted text-sm'>/month</span>
