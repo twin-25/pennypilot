@@ -13,6 +13,7 @@ from django.conf import settings
 from groq import Groq
 import json
 from django.db.models import Sum, Count
+from .utils import check_and_log_usage
 # Create your views here.
 
 
@@ -44,6 +45,15 @@ def getAiTips(request):
   {{"tip": "your tip here", "icon": "emoji"}}
 ]
   '''
+  if not user.is_pro:
+     allowed, usage = check_and_log_usage(user, 'tips', limit=3)
+     if not allowed:
+        return Response({
+           'error':'limit_exceeded',
+           'message':'Upgrade to Pro for unlimited AI Tips!!',
+           'usage': usage,
+           'limit': 3
+        }, status=status.HTTP_403_FORDIDDEN)
 
 
   try:
@@ -86,6 +96,16 @@ def getAiAnalysis(request):
     user = request.user
     now = datetime.now()
     last_month = now - timedelta(days=30)  
+
+    if not user.is_pro:
+     allowed, usage = check_and_log_usage(user, 'tips', limit=3)
+     if not allowed:
+        return Response({
+           'error':'limit_exceeded',
+           'message':'Upgrade to Pro for unlimited AI Analytics!!',
+           'usage': usage,
+           'limit': 3
+        }, status=status.HTTP_403_FORDIDDEN)
 
     # detailed transactions
     current_transactions = list(Transaction.objects.filter(
@@ -186,6 +206,16 @@ def getAiReport(request):
     user = request.user
     now = datetime.now()
     last_month = now - timedelta(days=30) 
+
+    if not user.is_pro:
+     allowed, usage = check_and_log_usage(user, 'tips', limit=1)
+     if not allowed:
+        return Response({
+           'error':'limit_exceeded',
+           'message':'Upgrade to Pro for unlimited AI Reports!!',
+           'usage': usage,
+           'limit': 1
+        }, status=status.HTTP_403_FORDIDDEN)
 
     current_transactions = list(Transaction.objects.filter(
         user=user,
