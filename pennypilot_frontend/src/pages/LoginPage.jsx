@@ -60,7 +60,7 @@ const LoginPage = () => {
             <span
               className='cursor-pointer'
               style={{ color: '#F5B528' }}
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/register')}
             >
               Register
             </span>
